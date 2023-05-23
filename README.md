@@ -13,14 +13,13 @@ altitude: 0.0000
 * you must have `helm` and `kubectl` and `minio Client` installed
 * you need to make 2 persistent volumes if the cluster doesnt have dynamic volume provisioner
 * then you need to make 2 persistent volume claims which names are important and used in values file.
-* i made `my-minio1` and `my-minio2` pvc's :
-	[pvc-1.yml](./_resources/pvc-1.yml)
-	[pvc-2.yml](./_resources/pvc-2.yml) 
+* i made `my-minio1` and `my-minio2` pvc's :         
+	[pvc-1.yml](./_resources/pvc-1.yml)       
+	[pvc-2.yml](./_resources/pvc-2.yml)       
 
-* after pvc's you need to write 2 `values` files for your desired deployment , heres my 2 templates:
-
-	[values1.yml](./_resources/values1.yml)
-	[values2.yml](./_resources/values2.yml)
+* after pvc's you need to write 2 `values` files for your desired deployment , heres my 2 templates:      
+	[values1.yml](./_resources/values1.yml)     
+	[values2.yml](./_resources/values2.yml)       
 	+ user: admin , password: admin123
 
 # deploy 2 minio pods 
@@ -108,4 +107,5 @@ altitude: 0.0000
 	mc cp pvc-2.yml local2/test
 	mc ls local1/test
 	```
-	
+everything should go as planned!   
+as always , just saving the effort...
