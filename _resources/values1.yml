@@ -1,0 +1,26 @@
+#global:
+#  imageRegistery: docker.iranrepo.ir
+
+mode: standalone
+
+image:
+  registry: docker.iranrepo.ir
+
+auth:
+  rootPassword: admin123
+
+statefulset:
+    replicaCount: 1
+    
+persistence:
+  existingClaim: my-minio1
+
+service:
+  type: NodePort
+  nodePorts:
+    api: 30100
+    console: 30101
+
+    #volumePermissions:
+    #image:
+    #registry: docker.iranrepo.ir
