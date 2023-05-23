@@ -10,6 +10,7 @@ altitude: 0.0000
 # Deploy minio helm chart
 
 # Prerequisites
+* i deployed it inside kubernetes so you would need these (you can do it however you want):
 * you must have `helm` and `kubectl` and `minio Client` installed
 * you need to make 2 persistent volumes if the cluster doesnt have dynamic volume provisioner
 * then you need to make 2 persistent volume claims which names are important and used in values file.
