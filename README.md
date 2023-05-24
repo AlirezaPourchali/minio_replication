@@ -109,4 +109,51 @@ altitude: 0.0000
 	mc ls local1/test
 	```
 everything should go as planned!   
+
+
+# restoring minio persistentVolume
+
+* if you delete your `persistentVolumeClaim` or dont use `persistentVolumeClaim` at all , helm will make one for you but when you uninstall the chart the pvc will be gone and on the next installation you wont have the same data.            
+* if your `persistentVolume`'s `recalimPolicy` is set to reclaim , the data is still there.       
+* but because it's set to the previous pvc and its gone you cant access the volume just by applying a pvc with the same name.       
+* it wouldnt work because the pv's reclaimRef is set to previous pvc `uid        
+* you need to delete the uid inside the pv's manifest .  
+	
+	```
+	kubectl get pv <name_of_pv>   
+	k edit pv <name_of_pv>
+	```
+	* if you dont know the name of the pv you can list all pv's and grep the name of your last pvc or your chart's name
+* the manifest will be opened find `uid` inside `claimRef` section and delete the line, you can change the name of the pvc that can connect to the pv as well . 
+* example:   
+```
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 8Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: my-minio3
+    namespace: development
+    resourceVersion: "29712660"
+    uid: 48f3447a-7f0e-4463-aeb6-d56217f83fa3
+```
+to 
+```
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 8Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: my-minio4
+    namespace: development
+```
+* now make a pvc with the same name and it will attach to this persistentVolume
+
+
 as always , just saving the effort...
