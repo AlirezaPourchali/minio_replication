@@ -91,6 +91,7 @@ service:
     api: 30200
     console: 30201
 ```      
+
 	+ user: admin , password: admin123
 
 # deploy 2 minio pods 
