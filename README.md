@@ -92,7 +92,7 @@ service:
     console: 30201
 ```      
 
-	+ user: admin , password: admin123
+	* user: admin , password: admin123
 
 # deploy 2 minio pods 
 * the first step is to install the helm chart with the desired values
