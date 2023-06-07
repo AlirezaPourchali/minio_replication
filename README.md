@@ -15,12 +15,82 @@ altitude: 0.0000
 * you need to make 2 persistent volumes if the cluster doesnt have dynamic volume provisioner
 * then you need to make 2 persistent volume claims which names are important and used in values file.
 * i made `my-minio1` and `my-minio2` pvc's :         
-	[pvc-1.yml](./_resources/pvc-1.yml)       
-	[pvc-2.yml](./_resources/pvc-2.yml)       
+```
+# pvc-1.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-minio1
+  labels:
+    app: runner
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi      
+```
+```
+# pvc-2.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-minio2
+  labels:
+    app: runner
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```     
 
 * after pvc's you need to write 2 `values` files for your desired deployment , heres my 2 templates:      
-	[values1.yml](./_resources/values1.yml)     
-	[values2.yml](./_resources/values2.yml)       
+```
+# values1.yml
+mode: standalone
+
+image:
+  registry: docker.iranrepo.ir
+
+auth:
+  rootPassword: admin123
+
+statefulset:
+    replicaCount: 1
+    
+persistence:
+  existingClaim: my-minio1
+
+service:
+  type: NodePort
+  nodePorts:
+    api: 30100
+    console: 30101
+```
+```
+# values2.yml
+mode: standalone
+
+image:
+  registry: docker.iranrepo.ir
+
+auth:
+  rootPassword: admin123
+
+statefulset:
+    replicaCount: 1
+    
+persistence:
+  existingClaim: my-minio2
+
+service:
+  type: NodePort
+  nodePorts:
+    api: 30200
+    console: 30201
+```      
 	+ user: admin , password: admin123
 
 # deploy 2 minio pods 
