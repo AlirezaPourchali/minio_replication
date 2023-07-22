@@ -1,11 +1,3 @@
----
-title: minio replication
-updated: 2023-05-23 08:11:22Z
-created: 2023-05-23 05:19:20Z
-latitude: 35.68919750
-longitude: 51.38897360
-altitude: 0.0000
----
 
 # Deploy minio helm chart
 
